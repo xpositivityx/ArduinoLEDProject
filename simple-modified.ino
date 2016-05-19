@@ -5,7 +5,8 @@
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
-
+//Row class
+#include <Row/Row.h>
 // Which pin on the Arduino is connected to the NeoPixels?
 // On a Trinket or Gemma we suggest changing this to 1
 #define PIN            6

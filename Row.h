@@ -2,18 +2,26 @@
 #define Row_h
 
 #include "Arduino.h"
-
+#include <Adafruit_NeoPixel.h>
 class Row
 {
 	public:
-		Row();
+		Row(int rowOffset, bool reverse, Adafruit_NeoPixel pixels);
 		bool checkTime();
 		void setNewDelay();
+		void movePixels();
+		void turnPixelOn(int pixelNum);
+		void setIncrementor(bool reverse);
+		void updatePixelPostion();
 	private:
 		unsigned long _currentTime;
 		unsigned long _prevTime;
 		int _delay;
-		bool _pixelPositions[23];
+		int _pixelPosition;
+		Adafruit_NeoPixel _pixels;
+		bool _reverse;
+		int _incrementor;
+		int _rowOffset;
 };
 
 

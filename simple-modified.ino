@@ -31,7 +31,7 @@ void setup() {
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
 #endif
   // End of trinket special code
-  Row *row1 = new Row();
+  Row *row1 = new Row(ROWLENGTH, true, pixels);
   pixels.begin(); // This initializes the NeoPixel library.
 }
 
@@ -40,13 +40,13 @@ void loop() {
   // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
 
   for(int i=0;i<ROWLENGTH;i++){
-
+    
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-    changePixelOn((ROWLENGTH * 1) + (i * -1), true);
-    changePixelOn((ROWLENGTH * 1) + i, false);
-    changePixelOn((ROWLENGTH * 3) + (i * -1), true);
-    changePixelOn((ROWLENGTH * 3) + i, false);
-    changePixelOn((ROWLENGTH * 5) + (i * -1), true);
+    // changePixelOn((ROWLENGTH * 1) + (i * -1), true);
+    // changePixelOn((ROWLENGTH * 1) + i, false);
+    // changePixelOn((ROWLENGTH * 3) + (i * -1), true);
+    // changePixelOn((ROWLENGTH * 3) + i, false);
+    // changePixelOn((ROWLENGTH * 5) + (i * -1), true);
 
     pixels.show(); // This sends the updated pixel color to the hardware.
 
@@ -54,15 +54,4 @@ void loop() {
 
   }
 }
-//takes boolean reverse 
-int changePixelOn(int pixelNum, bool reverse) {
-  int incrementor = 1;
-  if(reverse == true){
-    incrementor = -1;
-  }
-  pixels.setPixelColor(pixelNum - incrementor, pixelColorOff);//hide the last one
-  pixels.setPixelColor(pixelNum, pixelColorOn);//show the current one
-  return 1;
-}
-
 

@@ -3,7 +3,7 @@
 
 Row::Row()
 {
-	_pixelPositions[23] = {false}
+	_pixelPositions[23] = {false};
 }
 
 bool Row::checkTime()
@@ -11,9 +11,9 @@ bool Row::checkTime()
 	_currentTime = millis();
 	if(_currentTime >= (_prevTime + _delay)){
 		setNewDelay();
-		return true
+		return true;
 	}
-	return false
+	return false;
 }
 
 void Row::setNewDelay()

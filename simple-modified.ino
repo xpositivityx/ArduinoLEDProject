@@ -6,16 +6,14 @@
   #include <avr/power.h>
 #endif
 //Row class
-#include <Row/Row.h>
+#include "Row.h"
 // Which pin on the Arduino is connected to the NeoPixels?
 // On a Trinket or Gemma we suggest changing this to 1
 #define PIN            6
-
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS      115
-
+// Number of pixesl in each row
 #define ROWLENGTH      23 
-
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
 // example for more information on possible values.
@@ -33,7 +31,7 @@ void setup() {
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
 #endif
   // End of trinket special code
-
+  Row *row1 = new Row();
   pixels.begin(); // This initializes the NeoPixel library.
 }
 

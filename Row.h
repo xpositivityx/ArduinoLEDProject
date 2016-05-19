@@ -7,14 +7,14 @@ class Row
 {
 	public:
 		Row();
-		void checkTime();
+		bool checkTime();
 		void setNewDelay();
 	private:
 		unsigned long _currentTime;
 		unsigned long _prevTime;
-		int _delay
+		int _delay;
 		bool _pixelPositions[23];
-}
+};
 
 
 #endif

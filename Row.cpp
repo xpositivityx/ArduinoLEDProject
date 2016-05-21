@@ -8,6 +8,7 @@ Row::Row(int rowOffset, bool reverse, Adafruit_NeoPixel pixels)
 	_rowOffset = rowOffset;
 	setIncrementor(reverse);
   _pixels = pixels;
+  setNewDelay();
 }
 
 bool Row::checkTime()
@@ -23,24 +24,29 @@ bool Row::checkTime()
 void Row::setNewDelay()
 {
 	_delay = random(0, 2000);
+	_prevTime = millis();
 }
 
 void Row::movePixels()
 {
-	turnPixelOn(_rowOffset);
+	updatePixelPosition();
+	turnPixelOn(_pixelPosition);
 }
 
 void Row::turnPixelOn(int pixelNum)
 {
+	if(_incrementor == -1){
+		pixelNum = (_rowOffset + ROWLENGTH) + (_rowOffset - pixelNum);
+	}
   _pixels.setPixelColor(pixelNum - _incrementor, _pixels.Color(0,0,0));//hide the last one
   _pixels.setPixelColor(pixelNum, _pixels.Color(75,75,75));//show the current one
 }
 
-void Row::updatePixelPostion()
+void Row::updatePixelPosition()
 {
 	if(_pixelPosition == false){
-		_pixelPosition = 0;
-	}else if(_pixelPosition >= _rowOffset){
+		_pixelPosition = _rowOffset;
+	}else if(_pixelPosition >= _rowOffset || _pixelPosition <= (_rowOffset - ROWLENGTH)){
 		_pixelPosition = false;
 	}else{
 		_pixelPosition++;
@@ -54,4 +60,15 @@ void Row::setIncrementor(bool reverse)
   if(reverse == true){
     _incrementor = -1;
   }
+}
+
+int Row::handlePixel()
+{
+
+	if(checkTime() != true){
+		return 0;
+	}
+
+	movePixels();
+  return 1;
 }

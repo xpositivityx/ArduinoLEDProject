@@ -13,7 +13,10 @@
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS      115
 // Number of pixesl in each row
-#define ROWLENGTH      23 
+// #define ROWLENGTH      23 
+Row *row1 = new Row(ROWLENGTH, true, pixels);
+Row *row2 = new Row(ROWLENGTH * 2, false, pixels);
+Row *row3 = new Row(ROWLENGTH * 3, true, pixels);
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
 // example for more information on possible values.
@@ -31,7 +34,6 @@ void setup() {
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
 #endif
   // End of trinket special code
-  Row *row1 = new Row(ROWLENGTH, true, pixels);
   pixels.begin(); // This initializes the NeoPixel library.
 }
 
@@ -47,7 +49,7 @@ void loop() {
     // changePixelOn((ROWLENGTH * 3) + (i * -1), true);
     // changePixelOn((ROWLENGTH * 3) + i, false);
     // changePixelOn((ROWLENGTH * 5) + (i * -1), true);
-
+    row1->handlePixel();
     pixels.show(); // This sends the updated pixel color to the hardware.
 
     delay(delayval); // Delay for a period of time (in milliseconds).

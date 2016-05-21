@@ -2,7 +2,7 @@
 #include "Row.h"
 #include <Adafruit_NeoPixel.h>
 
-Row::Row(int rowOffset, bool reverse, Adafruit_NeoPixel pixels)
+Row::Row(int rowOffset, bool reverse, Adafruit_NeoPixel& pixels)
 {
 	_pixelPosition = false;
 	_rowOffset = rowOffset;
@@ -62,13 +62,9 @@ void Row::setIncrementor(bool reverse)
   }
 }
 
-int Row::handlePixel()
+void Row::handlePixel()
 {
-
-	if(checkTime() != true){
-		return 0;
+	if(checkTime() == true){
+		movePixels();
 	}
-
-	movePixels();
-  return 1;
 }

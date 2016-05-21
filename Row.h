@@ -7,14 +7,8 @@
 class Row
 {
 	public:
-		Row(int rowOffset, bool reverse, Adafruit_NeoPixel pixels);
-		int handlePixel();
-    bool checkTime();
-    void setNewDelay();
-    void movePixels();
-    void turnPixelOn(int pixelNum);
-    void setIncrementor(bool reverse);
-    void updatePixelPosition();
+		Row(int rowOffset, bool reverse, Adafruit_NeoPixel& pixels);
+		void handlePixel();
 	private:
 		unsigned long _currentTime;
 		unsigned long _prevTime;
@@ -24,6 +18,12 @@ class Row
 		bool _reverse;
 		int _incrementor;
 		int _rowOffset;
+		bool checkTime();
+    void setNewDelay();
+    void movePixels();
+    void turnPixelOn(int pixelNum);
+    void setIncrementor(bool reverse);
+    void updatePixelPosition();
 
 };
 

@@ -4,9 +4,9 @@
 
 Row::Row(int rowOffset, bool reverse, Adafruit_NeoPixel& pixels)
 {
-	_pixelPosition = false;
+	_pixelPosition = rowOffset;
 	_rowOffset = rowOffset;
-	setIncrementor(reverse);
+	_reverse = reverse;
   _pixels = pixels;
   setNewDelay();
 }
@@ -23,7 +23,7 @@ bool Row::checkTime()
 
 void Row::setNewDelay()
 {
-	_delay = random(0, 2000);
+	_delay = random(0, 1500);
 	_prevTime = millis();
 }
 
@@ -35,36 +35,39 @@ void Row::movePixels()
 
 void Row::turnPixelOn(int pixelNum)
 {
-	if(_incrementor == -1){
-		pixelNum = (_rowOffset + ROWLENGTH) + (_rowOffset - pixelNum);
+	if(_reverse){
+		pixelNum = (_rowOffset) + (_rowOffset - pixelNum);
 	}
-  _pixels.setPixelColor(pixelNum - _incrementor, _pixels.Color(0,0,0));//hide the last one
+  // make this call reusable
+  if(_pixelPosition == _rowOffset){
+   _pixels.setPixelColor(_rowOffset - ROWLENGTH, _pixels.Color(0,0,0));//hide the last one
+  }
+  // fix the incrementor so it wont be static.
+  _pixels.setPixelColor(pixelNum - -1, _pixels.Color(0,0,0));//hide the last one
   _pixels.setPixelColor(pixelNum, _pixels.Color(75,75,75));//show the current one
 }
 
 void Row::updatePixelPosition()
 {
-	if(_pixelPosition == false){
+	if(_pixelPosition >= (_rowOffset + ROWLENGTH) || _pixelPosition <= (_rowOffset - ROWLENGTH)){
 		_pixelPosition = _rowOffset;
-	}else if(_pixelPosition >= _rowOffset || _pixelPosition <= (_rowOffset - ROWLENGTH)){
-		_pixelPosition = false;
 	}else{
 		_pixelPosition++;
 	}
-	
 }
-
-void Row::setIncrementor(bool reverse)
+//This function is completely non functional.
+void Row::setIncrementor()
 {
 	int _incrementor = 1;
-  if(reverse == true){
+  if(_reverse == true){
     _incrementor = -1;
   }
 }
-
-void Row::handlePixel()
+// make void for final version. Int just for debugging.
+int Row::handlePixel()
 {
 	if(checkTime() == true){
 		movePixels();
 	}
+ return _pixelPosition;
 }

@@ -7,15 +7,15 @@
 //pin output
 #define PIN            6
 // How many NeoPixels are attached to the Arduino?
-#define NUMPIXELS      115
+#define NUMPIXELS      23
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
 // example for more information on possible values.
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 //setup rows
 Row* row1 = new Row(ROWLENGTH, true, pixels);
-Row* row2 = new Row(ROWLENGTH * 2, false, pixels);
-Row* row3 = new Row(ROWLENGTH * 3, true, pixels);
+Row* row2 = new Row(ROWLENGTH, false, pixels);
+Row* row3 = new Row(ROWLENGTH * 2, true, pixels);
 
 //int delayval = 100; // delay for half a second when testing on for loop.
 
@@ -24,6 +24,7 @@ void setup() {
   #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
+  Serial.begin(9600);
   // End of trinket special code
   pixels.begin(); // This initializes the NeoPixel library.
 }
@@ -31,7 +32,7 @@ void setup() {
 void loop() {
 
   // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
-  row1->handlePixel();
+  
   //for(int i=0;i<ROWLENGTH;i++){
     
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
@@ -45,6 +46,7 @@ void loop() {
     //delay(delayval); // Delay for a period of time (in milliseconds).
 
   //}
+  row1->handlePixel();
   pixels.show();
 }
 

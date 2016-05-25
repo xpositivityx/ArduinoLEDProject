@@ -9,10 +9,12 @@ Row::Row(int rowOffset, bool reverse, Adafruit_NeoPixel& pixels)
 	_reverse = reverse;
   _pixels = pixels;
   _firstPixel = new Pixel(_rowOffset);
+  setIncrementor();
 }
 
 void Row::turnPixelOn(int pixelNum)
 {
+  Serial.print(pixelNum);
 	if(_reverse){
 		pixelNum = (_rowOffset) + (_rowOffset - pixelNum);
 	}
@@ -21,17 +23,19 @@ void Row::turnPixelOn(int pixelNum)
    _pixels.setPixelColor(_rowOffset - ROWLENGTH, _pixels.Color(0,0,0));//hide the last one
   }
   // fix the incrementor so it wont be static.
-  _pixels.setPixelColor(pixelNum - -1, _pixels.Color(0,0,0));//hide the last one
-  _pixels.setPixelColor(pixelNum, _pixels.Color(75,75,75));//show the current one
+  _pixels.setPixelColor(pixelNum - _incrementor, _pixels.Color(0,0,0));//hide the last one
+  _pixels.setPixelColor(pixelNum, _pixels.Color(25,25,25));//show the current one
 }
 
 //This function is completely non functional.
 void Row::setIncrementor()
 {
-	int _incrementor = 1;
-  if(_reverse == true){
+  if(_reverse){
     _incrementor = -1;
+  }else{
+    _incrementor = 1;
   }
+  Serial.print(_incrementor);
 }
 // make void for final version. Int just for debugging.
 int Row::handlePixel()

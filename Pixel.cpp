@@ -31,7 +31,6 @@ void Pixel::updatePixelPosition()
 	}else{
 		position++;
 	}
-
 	Serial.print(position);
 }
 

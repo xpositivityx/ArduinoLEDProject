@@ -46,7 +46,7 @@ void loop() {
     //delay(delayval); // Delay for a period of time (in milliseconds).
 
   //}
-  Serial.print(row1->handlePixel());
+  row1->handlePixel();
   pixels.show();
 }
 

@@ -16,7 +16,6 @@ class Row
 		int _incrementor;
 		int _rowOffset;
 		bool _reverse;
-    void movePixels(Pixel*&);
     void turnPixelOn(int pixelNum);
     void setIncrementor();
     void createPixel();

@@ -8,12 +8,7 @@ Row::Row(int rowOffset, bool reverse, Adafruit_NeoPixel& pixels)
 	_rowOffset = rowOffset;
 	_reverse = reverse;
   _pixels = pixels;
-}
-
-void Row::movePixels(Pixel*& pixel)
-{
-	pixel->updatePixelPosition();
-	turnPixelOn(pixel->position);
+  _firstPixel = new Pixel(_rowOffset);
 }
 
 void Row::turnPixelOn(int pixelNum)
@@ -41,13 +36,8 @@ void Row::setIncrementor()
 // make void for final version. Int just for debugging.
 int Row::handlePixel()
 {
-	if(_firstPixel->checkTime() == true){
-		movePixels(_firstPixel);
+	if(_firstPixel->checkTime()){
+		turnPixelOn(_firstPixel->position);
 	}
  return _firstPixel->position;
-}
-
-void Row::createPixel()
-{
-	Pixel* _firstPixel = new Pixel(_rowOffset);
 }

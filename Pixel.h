@@ -3,12 +3,12 @@
 
 class Pixel{
 	public:
-		Pixel(int);
-    void updatePixelPosition();
+    Pixel(int);
     bool checkTime();
     int position;
 	private:	
-		void setNewDelay();
+    void setNewDelay();
+    void updatePixelPosition();
     unsigned long _currentTime;
     unsigned long _prevTime;
     int _delay;

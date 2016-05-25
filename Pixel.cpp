@@ -1,8 +1,10 @@
 #include "Arduino.h"
 #include "Pixel.h"
 #include "Row.h"
+
 Pixel::Pixel(int rowOffset){
 	_rowOffset = rowOffset;
+	setNewDelay();
 }
 
 bool Pixel::checkTime()
@@ -10,6 +12,7 @@ bool Pixel::checkTime()
 	_currentTime = millis();
 	if(_currentTime >= (_prevTime + _delay)){
 		setNewDelay();
+		updatePixelPosition();
 		return true;
 	}
 	return false;
@@ -28,5 +31,10 @@ void Pixel::updatePixelPosition()
 	}else{
 		position++;
 	}
+
+	Serial.print(position);
 }
+
+	
+
 

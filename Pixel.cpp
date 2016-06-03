@@ -26,12 +26,11 @@ void Pixel::setNewDelay()
 
 void Pixel::updatePixelPosition()
 {
-	if(position >= (_rowOffset + ROWLENGTH) || position <= (_rowOffset - ROWLENGTH)){
+	if(position >= (_rowOffset + ROWLENGTH - 1) || position <= (_rowOffset - ROWLENGTH - 1)){
 		position = _rowOffset;
 	}else{
 		position++;
 	}
-	Serial.print(position);
 }
 
 	

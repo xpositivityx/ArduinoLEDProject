@@ -7,7 +7,7 @@
 //pin output
 #define PIN            6
 // How many NeoPixels are attached to the Arduino?
-#define NUMPIXELS      115
+#define NUMPIXELS      138
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
 // example for more information on possible values.
@@ -18,6 +18,7 @@ Row* row2 = new Row(ROWLENGTH, false, pixels);
 Row* row3 = new Row(ROWLENGTH * 3, true, pixels);
 Row* row4 = new Row(ROWLENGTH * 3, false, pixels);
 Row* row5 = new Row(ROWLENGTH * 5, true, pixels);
+Row* row6 = new Row(ROWLENGTH * 5, false, pixels);
 
 //int delayval = 100; // delay for half a second when testing on for loop.
 
@@ -32,27 +33,11 @@ void setup() {
 }
 
 void loop() {
-
-  // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
-  
-  //for(int i=0;i<ROWLENGTH;i++){
-    
-    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-    // changePixelOn((ROWLENGTH * 1) + (i * -1), true);
-    // changePixelOn((ROWLENGTH * 1) + i, false);
-    // changePixelOn((ROWLENGTH * 3) + (i * -1), true);
-    // changePixelOn((ROWLENGTH * 3) + i, false);
-    // changePixelOn((ROWLENGTH * 5) + (i * -1), true);
-    //pixels.show(); // This sends the updated pixel color to the hardware.
-
-    //delay(delayval); // Delay for a period of time (in milliseconds).
-
-  //}
   row1->handlePixel();
   row2->handlePixel();
   row3->handlePixel();
   row4->handlePixel();
   row5->handlePixel();
-  pixels.show();
+  row6->handlePixel();
 }
 

@@ -58,7 +58,7 @@ void Row::createPixel()
 int Row::handlePixel()
 {
  int size = _pixelList->size();
- for(int i = 0; i < size - 1; i++){
+ for(int i = 0; i < size; i++){
   if(_pixelList->get(i)->checkTime()){
     turnPixelOn(_pixelList->get(i)->position);
   }

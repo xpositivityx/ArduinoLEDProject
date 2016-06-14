@@ -23,15 +23,7 @@ void Row::turnPixelOn(int pixelNum)
 		pixelNum = (_rowOffset) + (_rowOffset - pixelNum) - 1;
 	}
 
-  if(pixelNum == _rowOffset - 1 && _reverse){
-   _pixels.setPixelColor(_rowOffset - ROWLENGTH, _offColor);
-   Serial.print(pixelNum);//hide the last one
-  }
-
-  if(pixelNum == _rowOffset)
-  {
-    _pixels.setPixelColor(_rowOffset + ROWLENGTH - 1, _offColor);
-  }
+  hideLastPixel();  
   // fix the incrementor so it wont be static.
   _pixels.setPixelColor(pixelNum - _incrementor, _offColor);//hide the last one
   _pixels.setPixelColor(pixelNum, _onColor);//show the current one
@@ -49,19 +41,59 @@ void Row::setIncrementor()
 
 void Row::createPixel()
 {
-
   Pixel *newPixel = new Pixel(_rowOffset);
   _pixelList->add(newPixel);
+}
+
+void Row::createPixelCondition(int size, int position)
+{
+  int halfWayUp = _rowOffset + (ROWLENGTH / 2) - 1;
+  int halfWayDown = _rowOffset - (ROWLENGTH / 2) - 1;
+  if((position == halfWayUp || position == halfWayDown) && size <= 3){
+    int rand = random(100);
+    if(rand > 80 && size == 1){
+      createPixel();
+    }
+    if(rand > 90 && size == 2){
+      createPixel();
+    }
+  }
+}
+
+void Row::removePixel(int pixelPos, int i, int size)
+{
+  int rowTerminationTop = _rowOffset + ROWLENGTH - 1;
+  int rowTerminationBottom = _rowOffset - ROWLENGTH;
+  if((pixelPos == rowTerminationTop || pixelPos == rowTerminationBottom)){
+    hideLastPixel();
+    Pixel *popped = _pixelList->remove(i);
+    delete(popped);
+  }
+}
+
+void Row::hideLastPixel()
+{
+  if(_reverse){
+   _pixels.setPixelColor(_rowOffset - ROWLENGTH, _offColor);
+   return;
+  }
+
+  _pixels.setPixelColor(_rowOffset + ROWLENGTH - 1, _offColor);
 }
 
 // make void for final version. Int just for debugging.
 int Row::handlePixel()
 {
  int size = _pixelList->size();
+
  for(int i = 0; i < size; i++){
   if(_pixelList->get(i)->checkTime()){
-    turnPixelOn(_pixelList->get(i)->position);
+    int pixelPos = _pixelList->get(i)->position;
+    createPixelCondition(size, pixelPos);
+    turnPixelOn(pixelPos);
+    removePixel(pixelPos, i, size);
   }
  }
+ //remove after debugging
  return 1;
 }

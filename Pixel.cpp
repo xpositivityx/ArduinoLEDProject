@@ -4,6 +4,7 @@
 
 Pixel::Pixel(int rowOffset){
 	_rowOffset = rowOffset;
+	position = _rowOffset;
 	setNewDelay();
 }
 
@@ -26,7 +27,7 @@ void Pixel::setNewDelay()
 
 void Pixel::updatePixelPosition()
 {
-	if(position >= (_rowOffset + ROWLENGTH - 1) || position <= (_rowOffset - ROWLENGTH - 1)){
+	if(position >= (_rowOffset + ROWLENGTH - 1) || position <= (_rowOffset - ROWLENGTH)){
 		position = _rowOffset;
 	}else{
 		position++;

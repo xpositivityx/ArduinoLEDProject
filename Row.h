@@ -22,6 +22,9 @@ class Row
     void turnPixelOn(int pixelNum);
     void setIncrementor();
     void createPixel();
+    void createPixelCondition(int size, int position);
+    void removePixel(int pixelPos, int index, int size);
+    void hideLastPixel();
     LinkedList<Pixel*>* _pixelList;
 
 };

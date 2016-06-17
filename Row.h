@@ -18,6 +18,8 @@ class Row
 		long _onColor;
 		long _offColor;
 		long _brightColor;
+		long _delay;
+		long _pixelOffTime;
 		bool _reverse;
     void turnPixelOn(int pixelNum);
     void setIncrementor();

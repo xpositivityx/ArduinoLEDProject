@@ -8,12 +8,12 @@ Row::Row(int rowOffset, bool reverse, Adafruit_NeoPixel& pixels)
 	_rowOffset = rowOffset;
 	_reverse = reverse;
   _pixels = pixels;
-  Pixel *pixel = new Pixel(_rowOffset);
   _pixelList = new LinkedList<Pixel*>;
-  _pixelList->add(pixel);
   _onColor = _pixels.Color(25,25,25);
   _offColor = _pixels.Color(0,0,0);
   _brightColor = _pixels.Color(50,50,50);
+  _pixelOffTime = 0;
+  _delay = 0;
   setIncrementor();
 }
 
@@ -69,6 +69,8 @@ void Row::removePixel(int pixelPos, int i, int size)
     Pixel *popped = _pixelList->remove(i);
     delete(popped);
   }
+  _pixelOffTime = millis();
+  _delay = random(0, 3000);
 }
 
 void Row::hideLastPixel()
@@ -85,6 +87,11 @@ void Row::hideLastPixel()
 int Row::handlePixel()
 {
  int size = _pixelList->size();
+
+ if(size == 0 && millis() > _pixelOffTime + _delay){
+    createPixel();
+    return 1;
+ }
 
  for(int i = 0; i < size; i++){
   if(_pixelList->get(i)->checkTime()){

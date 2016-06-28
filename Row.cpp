@@ -70,7 +70,7 @@ void Row::removePixel(int pixelPos, int i, int size)
     delete(popped);
   }
   _pixelOffTime = millis();
-  _delay = random(0, 3000);
+  _delay = random(0, 5000);
 }
 
 void Row::hideLastPixel()

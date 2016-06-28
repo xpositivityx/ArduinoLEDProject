@@ -4,7 +4,7 @@
 
 Pixel::Pixel(int rowOffset){
 	_rowOffset = rowOffset;
-	position = _rowOffset;
+	position = _rowOffset - 1;
 	setNewDelay();
 }
 
